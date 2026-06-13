@@ -1,0 +1,21 @@
+# Daily Standup — Team Alpha
+
+Dev: Shriram
+Done: Completed RAG pipeline integration and fixed embedding model cache issue
+Today: Write unit tests for retriever module and update documentation
+Blockers: None
+
+Dev: Rahul Gandhi Ram
+Done: Reviewed 3 pull requests for auth module
+Today: Complete GitHub Actions CI pipeline setup
+Blockers: Waiting for DevOps team to provide staging environment credentials
+
+Dev: Priya
+Done: Deployed hotfix for login timeout bug to staging
+Today: Refactor user authentication flow and add token refresh logic
+Blockers: None
+
+Dev: Ananya
+Done: Designed database schema for new analytics feature
+Today: Start backend API implementation for analytics dashboard
+Blockers: API specification document not finalized yet by product team

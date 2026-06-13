@@ -1,0 +1,5 @@
+fastmcp
+openai
+httpx
+python-dotenv
+streamlit
