@@ -21,8 +21,6 @@ PROJECT_DIR  = Path(__file__).parent.as_posix()
 STANDUP_FILE = (Path(__file__).parent / "standups" / "standup_today.txt").as_posix()
 REPORT_PATH  = (Path(__file__).parent / "reports" / f"standup_{date.today()}.md").as_posix()
 
-from standup_server import mcp as standup_mcp
-from github_server  import mcp as github_mcp
 
 SERVER_COLORS = {
     "StandupServer [custom]":    "🟣",
@@ -57,7 +55,9 @@ def extract_text(raw) -> str:
 
 async def run_agent_streaming(q: queue.Queue):
     """Run agent and push events into queue as they happen — enables live UI updates."""
-    fs_transport = StdioTransport(
+    standup_transport = StdioTransport(command="python", args=["standup_server.py"])
+    github_transport  = StdioTransport(command="python", args=["github_server.py"])
+    fs_transport      = StdioTransport(
         command="npx",
         args=["-y", "@modelcontextprotocol/server-filesystem", PROJECT_DIR]
     )
@@ -69,9 +69,9 @@ async def run_agent_streaming(q: queue.Queue):
 
     Path("reports").mkdir(exist_ok=True)
 
-    async with Client(standup_mcp) as standup_client, \
-               Client(github_mcp)   as github_client, \
-               Client(fs_transport) as fs_client:
+    async with Client(standup_transport) as standup_client, \
+               Client(github_transport)  as github_client, \
+               Client(fs_transport)      as fs_client:
 
         standup_tools = await standup_client.list_tools()
         github_tools  = await github_client.list_tools()
